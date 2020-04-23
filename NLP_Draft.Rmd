@@ -1,0 +1,578 @@
+---
+title: "Prediction in Sentiment Analysis - Amazon Sample"
+subtitle: "Results - Insights - Methodology"
+author: "Philippe Lambot"
+date: "April 14, 2020"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 4
+---
+
+```{r Setup, include = FALSE}
+# In the YAML, I have asked a TOC (table of contents). 
+# I have also chosen to produce an html_document. 
+
+# In the opts_chunk just below, I have chosen options to avoid messages and warnings in SA_Amazon_Insights&Results.html. Messages and warnings produced by the code have already been dealt with.  
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+# The next opts_chunk regulates figure layout.
+knitr::opts_chunk$set(out.width = "60%", fig.align = "center")
+
+# The next instruction facilitates table layout in HTML.
+options(knitr.table.format = "html")
+
+# After the present chunk, there are 13 lines of code to further regulate layout:
+# - the 1st block prevents bullets appearing in the TOC (Table of Contents);
+# - the 2nd block determines font size in body text parts;
+# - the 3rd block generates text justification.
+
+# Output language
+Sys.setlocale("LC_ALL", "C")
+```
+
+<style type="text/css">
+div#TOC li {
+    list-style:none;
+    background-image:none;
+    background-repeat:none;
+    background-position:0;
+}
+</style>
+
+<font size="3">
+
+<style>
+body {
+text-align: justify}
+</style>
+
+## <br>
+## <br>
+## <br>
+
+## *********************************************************************************
+
+## PREDICTION IN SENTIMENT ANALYSIS - AMAZON SAMPLE
+
+## ********************************************************************************* 
+
+<br>
+
+## I. EXECUTIVE SUMMARY
+
+<br>
+
+GITHUB: https://github.com/Dev-P-L/Sentiment-Analysis
+
+<br>
+
+## II. FOREWORD to READERS
+
+<br>
+
+Dear Readers, you are most welcome to run the project on your own computer if you so wish.
+
+This project is lodged with the GitHub repository https://github.com/Dev-P-L/Sentiment-Analysis.
+
+New York Times blog articles from the time period September 2014-December 2014
+understand the features of a blog post that make it popular
+NYTimesBlogTrain.csv = the training data set. It consists of 6532 articles.
+https://www.kaggle.com/c/15-071x-the-analytics-edge-competition-spring-2015 
+
+For your convenience, the dataset has already been downloaded onto the GitHub repository wherefrom it will be automatically retrieved by the code from SA_Amazon_Code.Rmd. If you so wish, you can also easily retrieve the dataset from https://archive.ics.uci.edu/ml/datasets/Sentiment+Labelled+Sentences and adapt the SA_Amazon_Code.Rmd code accordingly.
+
+You can knit SA_Amazon_Code.Rmd (please in HTML) and produce SA_Amazon_Insights&Results.html on your own computer. On my laptop, running SA_Amazon_Code.Rmd takes approximately four hours. For information, here are some characteristics of my work environment:
+
+ - R version 3.5.1 (2018-07-02) -- "Feather Spray",
+ - RStudio Version 1.1.456,
+ - Windows 10.
+
+Some packages are required in SA_Amazon_Code.Rmd. The code from SA_Amazon_Code.Rmd contains instructions to download these packages if they are not available yet. 
+
+```{r Cleaning up workspace and downloading packages}
+# Cleaning up workspace for RAM management.
+invisible(if(!is.null(dev.list())) dev.off())
+rm(list=ls())
+cat("\014")
+
+# Downloading packages.
+if(!require(tidyverse)) install.packages("tidyverse", repos = "http://cran.us.r-project.org")
+if(!require(lubridate)) install.packages("tidyverse", repos = "http://cran.us.r-project.org")
+if(!require(caret)) install.packages("caret", repos = "http://cran.us.r-project.org")
+if(!require(tm)) install.packages("tm", repos = "http://cran.us.r-project.org")
+if(!require(kableExtra)) install.packages("kableExtra", repos = "http://cran.us.r-project.org")
+
+# Requiring libraries.
+library(tidyverse)
+library(lubridate)
+library(caret)
+library(tm)
+library(kableExtra)
+```
+
+Now, let's get in touch with data. 
+
+<br>
+
+## III. GETTING IN TOUCH with DATA
+
+<br>
+
+PubDate = as.character(PubDate),
+<br>
+
+```{r Dowloading data}
+url <- "https://raw.githubusercontent.com/gdwangh/edxTheAnalyticsEdge/master/kaggleCompetition/NYTimesBlogTrain.csv"
+ds <- read.csv(url) 
+DfNews <- ds %>% 
+  mutate(PubDate = as.character(PubDate),
+    Popular = as.factor(gsub(1, "Popular", gsub(0, "Unpopular", Popular))))
+```
+
+```{r Partitioning into training set and validation set}
+set.seed(1)
+ind_val <- createDataPartition(y = DfNews$Popular, 
+                               times = 1, p = 1/3, list = FALSE)
+ind_train <- as.integer(setdiff(1:nrow(DfNews), ind_val))
+trainNews <- DfNews[ind_train, ]
+valNews <- DfNews[ind_val, ]
+
+# Keeping labels as numeric as well for further use.
+y_train <- ds$Popular[ind_train]
+y_val <- ds$Popular[ind_val]
+rm(ds)
+```
+
+<br>
+
+## Exploratory analysis
+
+### A. Prevalence
+
+<br>
+
+```{r EDA Label breakdown by classes}
+tab <- table(trainNews$Popular)
+names(tab)
+tab <- data.frame(matrix(tab, nrow = 1, ncol = 2, byrow = TRUE)) %>%
+  `colnames<-`(names(tab)) %>%
+  `rownames<-`("Training Set")
+knitr::kable(tab, "html", align = "c") %>% 
+  kable_styling(bootstrap_options = "bordered", 
+                full_width = F, font_size = 16) %>%
+  column_spec(1, bold = T, color = "#808080") %>%
+  column_spec(2, bold = T, color = "#205030", background = "#a7e3bb") %>%
+  column_spec(3, bold = T, color = "#08457E", background = "#9bc4e2")
+tab
+```
+
+<br>
+
+Positive class is a clear minority, which justifies not relying on accuracy metric to measure predictive performance.  
+
+<br>
+
+```{r EDA Prevalence}
+pr <- paste((round((tab[1] / nrow(trainNews)), 2) * 100), " %", sep = "" ) %>% 
+  as.data.frame() %>% 
+  `colnames<-`('Prevalence of Positive Class ("Popular")') %>%
+  `rownames<-`("Training Set")
+knitr::kable(pr, "html", align = "c") %>% 
+  kable_styling(bootstrap_options = "bordered", 
+                full_width = F, font_size = 16) %>%
+  column_spec(1, bold = T, color = "#808080") %>%
+  column_spec(2, bold = T, color = "#205030", background = "#a7e3bb")
+rm(tab, pr)
+```
+
+<br>
+
+Prevalence of positive class is 17 %. 
+
+<br>
+
+```{r EDA NewsDesk geom_bar}
+tab <- trainNews %>% mutate(y = y_train) %>% group_by(NewsDesk) %>% 
+  summarize(n = n(), perc_pop = (sum(y) / n) * 100) %>% 
+  mutate(NewsDesk = reorder(NewsDesk, - perc_pop)) %>%
+  select(NewsDesk, n, perc_pop) %>% as.data.frame()
+
+graph <-  tab %>%
+  ggplot(aes(NewsDesk, perc_pop)) + 
+  geom_bar(stat = "identity", width = 0.40, 
+           color = "#007ba7", fill = "#9bc4e2") + 
+  ggtitle("Popularity Rate by News Desk") +
+  xlab("News Desk") + ylab("Popularity Rate (%)") +
+  theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+        axis.title.x = element_text(size = 16), 
+        axis.title.y = element_text(size = 16), 
+        axis.text.x = element_text(angle = 45, hjust = 1, size = 12),
+        axis.text.y = element_text(size = 12))
+graph
+rm(graph)
+```
+
+<br>
+
+There is clear-cut difference between some categories: OpEd and Science are on top, much above 50 % and other categories are much lower. 
+
+<br>
+
+```{r EDA NewsDesk tab}
+# Drawing a geom_bar graph with popularity percentages. 
+tab <- trainNews %>% mutate(y = y_train) %>% group_by(NewsDesk) %>% 
+  summarize(n = n(), perc_pop = round((sum(y) / n), 2) * 100) %>% 
+  arrange(desc(perc_pop)) %>% 
+  mutate(perc_pop = paste(perc_pop, "%", sep = " "))%>%
+  select(NewsDesk, n, perc_pop) %>% as.data.frame() %>%
+  `colnames<-`(c("News Desk", "Occurrence", "Popularity Percentage"))
+
+knitr::kable(tab, "html", align = "c") %>% 
+  kable_styling(bootstrap_options = "bordered", 
+                full_width = F, font_size = 16) %>%
+  row_spec(1:2, bold = T, color = "#205030", background = "#a7e3bb") %>%
+  row_spec(3:nrow(tab), bold = T, color = "#08457E", background = "#9bc4e2")
+rm(tab)
+```
+
+<br>
+
+All percentages seem statistically representative except for the last four ones.
+
+<br>
+
+```{r EDA SectionName geom_bar}
+tab <- trainNews %>% mutate(y = y_train) %>% group_by(SectionName) %>% 
+  summarize(n = n(), perc_pop = (sum(y) / n) * 100) %>% 
+  mutate(SectionName = reorder(SectionName, - perc_pop)) %>%
+  select(SectionName, n, perc_pop) %>% as.data.frame()
+
+graph <-  tab %>%
+  ggplot(aes(SectionName, perc_pop)) + 
+  geom_bar(stat = "identity", width = 0.40, 
+           color = "#007ba7", fill = "#9bc4e2") + 
+  ggtitle("Popularity Rate by Section Name") +
+  xlab("Section Name") + ylab("Popularity Rate (%)") +
+  theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+        axis.title.x = element_text(size = 16), 
+        axis.title.y = element_text(size = 16), 
+        axis.text.x = element_text(angle = 60, hjust = 1, size = 12),
+        axis.text.y = element_text(size = 12))
+graph
+rm(graph)
+```
+
+<br>
+
+```{r EDA SectionName tab}
+# Drawing a geom_bar graph with popularity percentages. 
+tab <- trainNews %>% mutate(y = y_train) %>% group_by(NewsDesk) %>% 
+  summarize(n = n(), perc_pop = round((sum(y) / n), 2) * 100) %>% 
+  arrange(desc(perc_pop)) %>% 
+  mutate(perc_pop = paste(perc_pop, "%", sep = " "))%>%
+  select(NewsDesk, n, perc_pop) %>% as.data.frame() %>%
+  `colnames<-`(c("Section Name", "Occurrence", "Popularity Percentage"))
+
+knitr::kable(tab, "html", align = "c") %>% 
+  kable_styling(bootstrap_options = "bordered", 
+                full_width = F, font_size = 16) %>%
+  row_spec(1:2, bold = T, color = "#205030", background = "#a7e3bb") %>%
+  row_spec(3:nrow(tab), bold = T, color = "#08457E", background = "#9bc4e2")
+rm(tab)
+```
+
+There is clear-cut difference between some categories: Crosswords/Games, Opinion and Health are on top, above 50 % and other categories are much lower. 
+
+<br>
+
+```{r EDA SubsectionName geom_bar}
+tab <- trainNews %>% mutate(y = y_train) %>% group_by(SubsectionName) %>% 
+  summarize(n = n(), perc_pop = (sum(y) / n) * 100) %>% 
+  mutate(SubsectionName = reorder(SubsectionName, - perc_pop)) %>%
+  select(SubsectionName, n, perc_pop) %>% as.data.frame()
+
+graph <-  tab %>%
+  ggplot(aes(SubsectionName, perc_pop)) + 
+  geom_bar(stat = "identity", width = 0.40, 
+           color = "#007ba7", fill = "#9bc4e2") + 
+  ggtitle("Popularity Rate by Subsection Name") +
+  xlab("Subsection Name") + ylab("Popularity Rate (%)") +
+  theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+        axis.title.x = element_text(size = 16), 
+        axis.title.y = element_text(size = 16), 
+        axis.text.x = element_text(angle = 60, hjust = 1, size = 12),
+        axis.text.y = element_text(size = 12))
+graph
+rm(graph)
+```
+
+<br>
+
+```{r EDA SectionName tab}
+# Drawing a geom_bar graph with popularity percentages. 
+tab <- trainNews %>% mutate(y = y_train) %>% group_by(SubsectionName) %>% 
+  summarize(n = n(), perc_pop = round((sum(y) / n), 2) * 100) %>% 
+  arrange(desc(perc_pop)) %>% 
+  mutate(perc_pop = paste(perc_pop, "%", sep = " "))%>%
+  select(SubsectionName, n, perc_pop) %>% as.data.frame() %>%
+  `colnames<-`(c("Subsection Name", "Occurrence", "Popularity Percentage"))
+
+knitr::kable(tab, "html", align = "c") %>% 
+  kable_styling(bootstrap_options = "bordered", 
+                full_width = F, font_size = 16) %>%
+  row_spec(1:2, bold = T, color = "#205030", background = "#a7e3bb") %>%
+  row_spec(3:nrow(tab), bold = T, color = "#08457E", background = "#9bc4e2")
+rm(tab)
+```
+
+
+
+
+<br>
+
+.. 
+
+<br>
+
+```{r EDA Illustrative sample of headlines}
+sample_size <- 3
+set.seed(1)
+seq <- sample(1:nrow(trainNews), sample_size, replace = FALSE)
+sampl <- trainNews$Headline[seq]
+
+# Building presentation table.
+tab <- sampl %>% as.data.frame() %>% 
+  `colnames<-`("ILLUSTRATIVE SAMPLE OF HEADLINES") %>%
+  `rownames<-`(paste("Training Set Row Number", seq, sep = " "))
+knitr::kable(tab, "html", align = "c") %>% 
+  kable_styling(bootstrap_options = "bordered", 
+                full_width = F, font_size = 16) %>%
+  column_spec(1, bold = T, color = "#808080") %>%
+  column_spec(2, bold = T, color = "#08457E", background = "#9bc4e2")
+rm(sample_size, seq, sampl, tab)
+```
+
+<br>
+
+...
+
+<br>
+
+```{r EDA Illustrative sample of abstracts}
+sample_size <- 3
+set.seed(1)
+seq <- sample(1:nrow(trainNews), sample_size, replace = FALSE)
+sampl <- trainNews$Abstract[seq]
+
+# Building presentation table.
+tab <- sampl %>% as.data.frame() %>% 
+  `colnames<-`("ILLUSTRATIVE SAMPLE OF ABSTRACTS") %>%
+  `rownames<-`(paste("Training Set Row Number", seq, sep = " "))
+knitr::kable(tab, "html", align = "c") %>% 
+  kable_styling(bootstrap_options = "bordered", 
+                full_width = F, font_size = 16) %>%
+  column_spec(1, bold = T, color = "#808080") %>%
+  column_spec(2, bold = T, color = "#08457E", background = "#9bc4e2")
+rm(sample_size, seq, sampl, tab)
+```
+
+<br>
+
+.. 
+
+<br>
+
+```{r EDA Illustrative sample of snippets}
+sample_size <- 3
+set.seed(1)
+seq <- sample(1:nrow(trainNews), sample_size, replace = FALSE)
+sampl <- trainNews$Snippet[seq]
+
+# Building presentation table.
+tab <- sampl %>% as.data.frame() %>% 
+  `colnames<-`("ILLUSTRATIVE SAMPLE OF SNIPPETS") %>%
+  `rownames<-`(paste("Training Set Row Number", seq, sep = " "))
+knitr::kable(tab, "html", align = "c") %>% 
+  kable_styling(bootstrap_options = "bordered", 
+                full_width = F, font_size = 16) %>%
+  column_spec(1, bold = T, color = "#808080") %>%
+  column_spec(2, bold = T, color = "#08457E", background = "#9bc4e2")
+rm(sample_size, seq, sampl, tab)
+```
+
+<br>
+
+Consequently, should snippets be taken into account or should that predictor be discarded? How many snippets differ from abstracts because some words have been dropped? 
+
+<br>
+
+```{r Number of snippets that differ from abstracts because some words from snippets have been dropped?}
+v <- as.logical(rep("FALSE", length(trainNews$Snippet)))
+for (i in 1:length(trainNews$Snippet)) {
+  v[i] <- identical(as.character(trainNews$Snippet[i]), 
+                    as.character(trainNews$Abstract[i]))
+}
+
+nr_dif <- as.integer(sum(v == FALSE))
+prop_dif <- paste(round((nr_dif / length(v)) * 100, 2), "%", sep = " ")
+df <- data.frame(matrix(c(nr_dif, prop_dif), nrow = 2, ncol = 1),
+                 stringsAsFactors = FALSE) %>%
+  `rownames<-`(c("Number in Training Set", "Proportion in Training Set")) %>%
+  `colnames<-`("Snippets Differing from Abstracts")
+
+knitr::kable(df, "html", align = "c") %>% 
+  kable_styling(bootstrap_options = "bordered", 
+                full_width = F, font_size = 16) %>%
+  column_spec(1, bold = T, color = "#808080") %>%
+  column_spec(2, bold = T, color = "#08457E", background = "#9bc4e2")
+rm(v, nr_dif, prop_dif, df)
+```
+
+<br>
+
+Snippets differing from abstracts are underrepresented. The vast majority of snippets are strictly identical to abstracts. Consequently, only one out of the two predictors will be kept. Should it be abstracts because in a tiny minority of cases they contain some additional words? Not necessarily because readers could pay more attetion to snippets. Actually, both predictors will be tried separately and the one that outperforms the other will be kept.
+
+<br>
+
+```{r EDA WordCount}
+# Calculating quartiles.
+s <- summary(trainNews$WordCount)
+df <- data.frame(intervals = as.character(names(s)), values = matrix(s), 
+                 stringsAsFactors = FALSE)
+
+# Removing the mean from the data frame to only keep quartiles, minimum and maximum.
+row.to.remove <- which(df$intervals %in% "Mean")
+df <- df[- row.to.remove,] 
+
+# Enlarging range to include minimum and maximum.
+v = df$values
+v[1] <- floor(v[1])
+v[length(v)] <- ceiling(tail(v, 1))
+
+# Rounding to upgrade clarity in graph and table.
+for (i in 1:(length(v) - 2))  {
+  v[i + 1] <- round(v[i + 1])
+}
+
+df <- df %>% mutate(values = v)
+
+# Building up data frame with default percentages per quartile.
+tab <- trainNews %>% select(WordCount) %>% 
+  mutate(y = y_train) %>%
+  mutate(intervals = cut(WordCount, breaks = df$values, 
+                        include.lowest = TRUE, right = TRUE, dig.lab = 5)) %>%
+  group_by(intervals) %>% 
+  summarize(n = n(), perc_pop = ((sum(y) / n) * 100)) %>%  
+  select(intervals, n, perc_pop) %>% as.data.frame()
+
+# Drawing a geom_bar graph with default percentages. 
+graph <-  tab %>%
+  ggplot(aes(intervals, perc_pop)) + 
+  geom_bar(stat = "identity", width = 0.40, color = "#007ba7", fill = "#9bc4e2") + 
+  ggtitle("Popularity Rate per Quartile of Word Count") +
+  xlab("Quartile of Word Count") + ylab("Popularity Rate (%)") +
+  theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+        axis.title.x = element_text(size = 16), 
+        axis.title.y = element_text(size = 16), 
+        axis.text.x = element_text(angle = 45, hjust = 1, size = 12),
+        axis.text.y = element_text(size = 12))
+graph
+```
+
+<br> 
+
+The graph above is insightful: measured per quartile of WordCount, popularity rate is strictly and substantially increasing with the word count. Word count will be used as a predictor in Machine Learning.
+
+<br> 
+
+```{r EDA and data Profiling about date-time}
+# Let's build up a temporary data frame encompassing chronological decomposition of date and time of publication. 
+temp <- trainNews %>% 
+  mutate(y = y_train) %>%
+  mutate(date = as.POSIXct(PubDate)) %>%
+  mutate(weekday = weekdays(date)) %>%     # names of the days of the week
+  mutate(month = month(date)) %>%          # names of months
+  mutate(hour = hour(date)) %>%            # 24-hour clock
+  mutate(date_week = round_date(as_datetime(date), unit = "week")) %>% 
+                                           # time series of week dates
+  mutate(date_day = round_date(as_datetime(date), unit = "day")) %>%
+                                           # time series of day dates 
+  as.data.frame(stringsAsFactors = FALSE)
+
+df <- temp %>% group_by(NewsDesk) %>% summarize(avg = mean(y))
+df
+
+graph <-  temp %>% 
+  group_by(date_day) %>%
+  summarize(avg = mean(y)) %>%
+  ggplot(aes(date_day, avg)) + 
+  geom_point()
+graph
+```
+
+Graph with popularity average per month.
+
+<br> 
+
+```{r EDA Popularity average per month in graph}
+graph <-  temp %>% 
+  group_by(month) %>% 
+  summarize(avg = mean(y)) %>%
+  ggplot(aes(month, avg)) + 
+  geom_bar(stat = "identity", width = 0.40, 
+           color = "#007ba7", fill = "#9bc4e2") + 
+  ggtitle("Popularity Rate per Month") +
+  xlab("Month") + ylab("Popularity Rate (%)") +
+  theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+        axis.title.x = element_text(size = 16), 
+        axis.title.y = element_text(size = 16), 
+        axis.text.x = element_text(angle = 45, hjust = 1, size = 12),
+        axis.text.y = element_text(size = 12))
+graph
+rm(graph)
+```
+
+<br> 
+
+Differences per month being Lilliputian, this predictor will not be added to the training set. Let's now have a try with days of the week. 
+
+<br> 
+
+```{r EDA Popularity average per month in graph}
+graph <-  temp %>% 
+  group_by(weekday) %>% 
+  summarize(avg = mean(y)) %>%
+  arrange(match(week.name, weekday)) %>%
+  mutate(Months = factor(weekday, levels = weekday)) %>%
+  ggplot(aes(weekday, avg)) + 
+  geom_bar(stat = "identity", width = 0.40, 
+           color = "#007ba7", fill = "#9bc4e2") + 
+  ggtitle("Popularity Rate per Month") +
+  xlab("Month") + ylab("Popularity Rate (%)") +
+  theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+        axis.title.x = element_text(size = 16), 
+        axis.title.y = element_text(size = 16), 
+        axis.text.x = element_text(angle = 45, hjust = 1, size = 12),
+        axis.text.y = element_text(size = 12))
+graph
+rm(graph)
+```
+
+<br> 
+
+Differences per month being Lilliputian, this predictor will not be added to the training set. Let's now have a try with days of the week. 
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
