@@ -2,7 +2,7 @@
 title: "Popularity Prediction"
 subtitle: "New York Times Blog Articles"
 author: "Philippe Lambot"
-date: "April 30, 2020"
+date: "May 4, 2020"
 output: 
   html_document:
     toc: true
@@ -52,9 +52,9 @@ text-align: justify}
 
 ## ---------------------------------------------------------------------------------
 
-## POPULARITY PREDICTION OF A SET OF NEW YORK TIMES BLOG ARTICLES               ----
+## POPULARITY PREDICTION of NY TIMES BLOG ARTICLES                        
 
-## --------------------------------------------------------------------------------- 
+## ---------------------------------------------------------------------------------
 
 <br>
 
@@ -62,9 +62,9 @@ text-align: justify}
 
 <br>
 
-This project is about predicting popularity of a set of blog articles. The objective is maximizing the ROC AUC, i.e. the Area Under the Curve of the Receiver Operating Characteristic (ROC). 
+This project is about predicting popularity of a set of blog articles. The objective is maximizing the ROC AUC, i.e. the Area Under the Curve of the Receiver Operating Characteristic (ROC) curve. 
 
-A rate of **94 % AUC** has been reached using **Natural Language Processing** and an **ensemble Machine Learning solution** combining eXtreme Gradient Boosting and Random Forest. Combination has been tested with ROC curves on bootsrapped resamples. 
+A rate of **94 % AUC** has been reached using **Natural Language Processing** and an **ensemble Machine Learning solution** combining eXtreme Gradient Boosting and Random Forest. Combination has been tested with ROC curves on bootstrapped resamples. 
 
 TAGS: AUC, ROC, NLP, corpus, document term matrix, bag of words, ML, binary classification, eXtreme Gradient Boosting, Random Forest, bootstrapping, resamples, distributions, sensitivity, specificity, ensemble solution 
 
@@ -74,7 +74,7 @@ GITHUB: https://github.com/Dev-P-L/Sentiment-Analysis
 
 <br>
 
-## II. FOREWORD to READERS
+## II. FOREWORD to READERS and ACKNOWLEDGEMENTS
 
 <br>
 
@@ -123,7 +123,7 @@ library(caret)
 library(pROC)
 ```
 
-Now, let's get in touch with data. 
+Let me also thank my friend Richard Reagan, former Associate General Counsel, JPMorgan Chase, N.A., for indefatigable questioning and discussion about domain, data science and editing. Interaction has been most supportive.  
 
 <br>
 
@@ -131,7 +131,7 @@ Now, let's get in touch with data.
  
 <br>
 
-The dataset is plit into a validation set and a training set: the validation set contains one third of the rows from the original dataset, the training set two thirds. 
+The dataset is split into a validation set and a training set: the validation set contains one third of the rows from the original dataset, the training set two thirds. 
 
 If some categories (from e.g. "SectionName") are populated in the validation set but not in the training set, nevertheless the corresponding rows remain in the validation set. This might lower AUC a little bit but in real-life prediction new data could indeed contain new categories. 
 
@@ -266,7 +266,7 @@ rm(graph)
 
 *News desks* with average popularity rate below 20 % predominate: there are more *news desk* groups below 20 % average popularity than above and they are altogether much more populated, with the undefined group containing at least 1,200 blog articles and the *business* group at least 900. 
 
-Nevertheless, three *news desks* stand out from the majority, and among them the *op-ed* group with an average popularity rate of almost 80 %. Moreover, the *op-ed* average popularity rate can be considered statistically representative with at least 300 blog articles. Let's digitalize information in the following table in order to get more precise information, among others about the numbers of blog articles in the *science* and *styles* categories.
+Nevertheless, three *news desks* stand out from the majority, and among them the *op-ed* group with an average popularity rate of almost 80 %. Moreover, the *op-ed* average popularity rate can be considered statistically representative with at least 300 blog articles. Let's digitize information in the following table in order to get more precise information, among others about the numbers of blog articles in the *science* and *styles* categories.
 
 <br>
 
@@ -598,7 +598,7 @@ rm(s, row.to.remove, df, v, tab, graph)
 
 <br> 
 
-The graph above is insightful: measured per quartile of word count, popularity rate is strictly and substantially increasing with word count. Moreover, differences are statistically significant since each average popularity rate refers to appoximately one fourth of the training set. Consequently, Word count will be used as a predictor in Machine Learning.
+The graph above is insightful: measured per quartile of word count, popularity rate is strictly and substantially increasing with word count. Moreover, differences are statistically significant since each average popularity rate refers to approximately one fourth of the training set. Consequently, Word count will be used as a predictor in Machine Learning.
 
 The next group of predictors contains temporal patterns. 
 
@@ -617,8 +617,6 @@ Month can be interesting: there are three of them, from September until November
 Two additional temporal patterns will be extracted: day of the week and hour in a 24-hour clock system. 
 
 <br>
-%>%
-  as.data.frame(stringsAsFactors = FALSE)
 
 ```{r Time decomposition of the time series PubDate, echo = T}
 temp <- trainNews %>% 
@@ -714,7 +712,7 @@ rm(tab)
 
 <br>
 
-The higher popularity rate of Saturday is also considered statistically significative with 131 blog articles. 
+The higher popularity rate of Saturday is also considered statistically significant with 131 blog articles. 
 
 <br> 
 
@@ -829,7 +827,7 @@ sentSparse <- as.data.frame(as.matrix(sparse))
 colnames(sentSparse) <- make.names(colnames(sentSparse))
 ```
 
-Let's have a look at a wordcloud based on the bag of words to get some pre-attentive insights. 
+Let's have a look at a word cloud based on the bag of words to get some pre-attentive insights. 
 
 ```{r Adapting opts_chunk to enlarge display width for a wordcloud}
 knitr::opts_chunk$set(out.width = "100%", fig.align = "center")
@@ -849,7 +847,7 @@ knitr::opts_chunk$set(out.width = "60%", fig.align = "center")
 sentSparse_train <- sentSparse
 ```
 
-In the wordcloud above can be seen tokens such as *fashion*, *obama*, *presid*, *senat*, *billion*, *bank*, *million*, *work*, etc. 
+In the word cloud above can be seen tokens such as *fashion*, *obama*, *presid*, *senat*, *billion*, *bank*, *million*, *work*, etc. 
 
 Let's add the columns from the Document Term Matrix to the training set and proceed to Machine Learning prediction of popularity.
 
@@ -888,7 +886,7 @@ fit_rf <- train(Popular ~ ., data = train,
 rm(fitControl)
 ```
 
-Let's compare rf and xgb merits. It is only fitting that the first examined objects are the respective ROC curves and ROC AUCs. Let's start with XGB.
+Let's compare RF and XGB merits. It is only fitting that the first examined objects are the respective ROC curves and ROC AUCs. Let's start with XGB.
 
 <br>
 
@@ -905,7 +903,7 @@ graph <- plot.roc(roc_xgb,
            auc.polygon.density = 100, auc.polygon.angle = 45,
            auc.polygon.border= "#205030", print.auc.cex= 1.75,
          main = "ROC Curve from XGB Model",
-         xlab = "False Negative Rate", ylab = "True Positive Rate")
+         xlab = "False Positive Rate", ylab = "True Positive Rate")
 graph
 rm(graph)
 ```
@@ -929,7 +927,7 @@ graph <- plot.roc(roc_rf,
            auc.polygon.density = 100, auc.polygon.angle = 45,
            auc.polygon.border= "#c90016", print.auc.cex= 1.75,
          main = "ROC curve from RF Model",
-         xlab = "False Negative Rate", ylab = "True Positive Rate")
+         xlab = "False Positive Rate", ylab = "True Positive Rate")
 graph
 rm(graph)
 ```
@@ -950,13 +948,13 @@ In order to answer these questions, let's make the most of unused information ab
 
 <br>
 
-In the train() function from the package caret, the default methods have been kept: parameters are tuned across three values and resampling is done on 25 bootstrapped resamples. In the XGB model, there have been 675 AUC estimates: indeed, there are 27 combinations of parameter values (3 values for the parameter *lambda*, 3 for the parameter *alpha* and 3 again for the parameter *nrounds*) and each combination is run on 25 bootstrapped resamples. In the RF model, there have been 75 AUC esimates: 3 values for the parameter *mtry*, each of them being run on 25 bootstapped resamples. 
+In the train() function from the package caret, the default methods have been kept: parameters are tuned across three values and resampling is done on 25 bootstrapped resamples. In the XGB model, there have been 675 AUC estimates: indeed, there are 27 combinations of parameter values (3 values for the parameter *lambda*, 3 for the parameter *alpha* and 3 again for the parameter *nrounds*) and each combination is run on 25 bootstrapped resamples. In the RF model, there have been 75 AUC estimates: 3 values for the parameter *mtry*, each of them being run on 25 bootstrapped resamples. 
 
 Looking at these AUC estimates might deliver insights about overfitting and performance transposability to the validation set. 
 
-But before retrieving insights from bootstrapped resample distributions, let's notice another subtle clue. At the upper right-hand corner of the AUC polygons is an indication of the probability threshold for which true positive rate and false negative rate are equal to each other. That threshold is pretty different for RF and for XGB: 0.452 for RF and 0.299 for XGB. Independently of performance, this gap in internal results might become an impactful insight in case there is heavy overfitting. Indeed, combining models with different results may boost performance... Let's keep that in mind and go back to bootstrapped resample distributions. 
+But before retrieving insights from bootstrapped resample distributions, let's notice another subtle clue. At the upper right-hand corner of the AUC polygons is an indication of the probability threshold for which true positive rate and false positive rate are equal to each other. That threshold is pretty different for RF and for XGB: 0.452 for RF and 0.299 for XGB. Independently of performance, this gap in internal results might become an impactful insight in case there is heavy overfitting. Indeed, combining models with different results may boost performance... Let's keep that in mind and go back to bootstrapped resample distributions. 
 
-Let's get started with a quick summary statistic per model, which is calculated accross all AUCs per model, i.e. accross 675 AUCs for XGB and 75 AUCs for R. This summary statistic gives 
+Let's get started with a quick summary statistic per model, which is calculated across all AUCs per model, i.e. across 675 AUCs for XGB and 75 AUCs for R. This summary statistic gives 
 
 - the minimum of all AUCs per model,
 - the mean of all AUCs per model 
@@ -1088,7 +1086,7 @@ rm(tab)
 
 <br>
 
-The table above is the last step in our evaluating the predictive power of the XGB and RF models thanks to bootsrapped resample information. First, AUCs have been collected on the 675 resamples from XGB and the 75 resamples from RF. Second, AUCs have been regrouped according to parameterization, with 27 parameter value combinations for XGB and 3 parameter values for RF. Third, in the table above figure only AUCs corresponding to optimal parameterization. In the three steps, XGB has proved a little more performant in AUC. In the third and last step in particular, XGB scores an AUC of 93 % versus an AUC of 92 % for RF. 
+The table above is the last step in our evaluating the predictive power of the XGB and RF models thanks to bootstrapped resample information. First, AUCs have been collected on the 675 resamples from XGB and the 75 resamples from RF. Second, AUCs have been regrouped according to parameterization, with 27 parameter value combinations for XGB and 3 parameter values for RF. Third, in the table above figure only AUCs corresponding to optimal parameterization. In the three steps, XGB has proved a little more performing in AUC. In the third and last step in particular, XGB scores an AUC of 93 % versus an AUC of 92 % for RF. 
 
 At this stage, XGB should be the model to be validated on the validation set.
 
@@ -1100,9 +1098,9 @@ But AUC level has dramatically dropped with respect to the final model on the tr
 
 <br>
 
-As far as model optimization is concerned, an insight had previously been garnered: in the graphs of AUC polygons, a substantial difference had been noticed in the probability threshold that equalled true positive rate and false negative rate. Differences in results can be an insight towards combining models into an ensemble solution. 
+As far as model optimization is concerned, an insight had previously been garnered: in the graphs of AUC polygons, a substantial difference had been noticed in the probability threshold that equaled true positive rate and false positive rate. Differences in results can be an insight towards combining models into an ensemble solution. 
 
-That is exactly what will be tried. An ensemble solution will be built by combining probabilities of the positive class originating from the two individual models: for each blog article, popularity will be predicted using the average of the probilities produced respectively by XGB and RF.
+That is exactly what will be tried. An ensemble solution will be built by combining probabilities of the positive class originating from the two individual models: for each blog article, popularity will be predicted using the average of the probabilities produced respectively by XGB and RF.
 
 Before opting into validating the ensemble solution on the validation set, the predictive power of the ensemble solution will be tested on the bootstrapped resamples. 
 
@@ -1148,19 +1146,21 @@ auc_ensemble <- as.numeric(auc_ensemble) %>%
   select(auc)
 
 synthesis <- rbind(auc_xgb_rf, auc_ensemble) %>%
-  `colnames<-`("RESAMPLE AUC with OPTIMAL PARAMETERIZATION") %>%
-  `rownames<-`(c("eXtreme Gradient Boosting Model",
-                 "Random Forest Model",
-                 "Ensemble Solution XGB + RF"))
+    `colnames<-`("auc") %>%
+    mutate(name = c("eXtreme Gradient Boosting Model",
+                   "Random Forest Model",
+                   "Ensemble Solution XGB + RF")) %>%
+    mutate(auc = as.numeric(auc)) %>%
+    select(name, auc) %>%
+    arrange(auc) %>%
+    `colnames<-`(c("", "RESAMPLE AUC with OPTIMAL PARAMETERIZATION"))
 
 knitr::kable(synthesis, "html", align = "c") %>% 
   kable_styling(bootstrap_options = "bordered", 
                 full_width = F, font_size = 16) %>%
-  row_spec(1, bold = T, color = "#205030", background = "white") %>%
-  row_spec(2, bold = T, color = "#c90016", background = "white") %>%
+  row_spec(1, bold = T, color = "#c90016", background = "white") %>%
+  row_spec(2, bold = T, color = "#205030", background = "white") %>%
   row_spec(3, bold = T, color = "#08457E", background = "white") 
-  
-rm(stat, tab)
 ```
 
 <br> 
@@ -1173,15 +1173,18 @@ On the basis of bootstrapped resamples, the most performing model in AUC is the 
 
 <br>
 
-```{r Building up the validation set}
-back_up <- valNews
-valNews <- back_up %>% 
+The training set has been built up completely separately, to avoid any interaction with the validation set, which will be constructed now. 
+
+<br>
+
+```{r Building up the validation set, echo = TRUE}
+valNews <- valNews %>% 
   mutate(date = as.POSIXct(PubDate)) %>%
-  mutate(weekday = weekdays(date)) %>%           # names of the days of the week
-  mutate(hour = hour(date)) %>%                  # 24-hour clock
+  mutate(weekday = weekdays(date, abbreviate = TRUE)) %>%           
+  mutate(hour = hour(date)) %>%                  
   as.data.frame(stringsAsFactors = FALSE) %>%
-  select(- PubDate, - Abstract, - UniqueID)
-str(valNews, vec.len = 1)
+  select(- PubDate, - date, - Abstract, - UniqueID)
+
 # Combining headlines and snippets.
 v <- 1:nrow(valNews)
 for (i in 1:nrow(valNews)) {
@@ -1219,76 +1222,84 @@ colnames(sentSparse) <- make.names(colnames(sentSparse))
 
 # Let's keep only columns that alo exist in the training set. 
 sentSparse <- sentSparse %>% as.data.frame() %>% 
-               select(intersect(colnames(.), colnames(sentSparse_train)))
+  select(intersect(colnames(.), colnames(sentSparse_train)))
 
 # Columns from train that are missing in val have to be added as null vectors.
 mis <- setdiff(colnames(sentSparse_train), colnames(sentSparse))
 df <- data.frame(matrix((nrow(sentSparse) * length(mis)), 
-                        nrow = nrow(sentSparse), ncol = length(mis)) * 0) %>%
+                 nrow = nrow(sentSparse), ncol = length(mis)) * 0) %>%
       `colnames<-`(mis)
 buffer <- cbind(sentSparse, df) %>% as.data.frame()
 
-val <- cbind(valNews, buffer) %>% select(- date, - Headline, - Snippet)
-
-# Validation accuracy
-pred_xgb <- predict(fit_xgb, newdata = val)
-mean(pred_xgb == val$Popular)
-pred_rf <- predict(fit_rf, newdata = val)
-mean(pred_rf == val$Popular)
-str(as.character(pred_xgb))
-pred_1 <- as.numeric(gsub("Unpopular", "0", 
-                          gsub("Popular", "1", as.character(pred_xgb))))
-pred_2 <- as.numeric(gsub("Unpopular", "0", gsub("Popular", "1", pred_rf)))
-pred <- ifelse((pred_1 + pred_2) > 0, "Popular", "Unpopular")
-mean(pred == val$Popular)
-
-# Final model -> Ensemble
-stat <- summary(resamples(list(fit_xgb, fit_rf)))
-stat$statistics$ROC
-
-df_xgb <- fit_xgb$pred %>% 
-          as.data.frame(stringsAsFactors = FALSE) %>%
-          filter(lambda == 0.1, alpha == 0, nrounds == 50) %>% 
-          group_by(rowIndex) %>% 
-          summarize(prob_popular = mean(Popular)) %>%
-          select(rowIndex, prob_popular)
-
-df_rf <- fit_rf$pred %>% 
-         as.data.frame(stringsAsFactors = FALSE) %>%
-         filter(mtry == 52) %>%
-         group_by(rowIndex) %>% 
-         summarize(prob_popular = mean(Popular)) %>%
-         select(rowIndex, prob_popular)
-
-nrow(df_xgb)
-nrow(df_rf)
-identical(df_xgb$rowIndex , df_rf$rowIndex)
-
-prob_popular_ensemble <- (df_xgb$prob_popular + df_rf$prob_popular) / 2
-roc(as.factor(train$Popular), prob_popular_ensemble)
-
-# Validation AUC
-pred_xgb <- predict(fit_xgb, newdata = val, type = "prob")
-roc_xgb <- roc(as.factor(val$Popular), pred_xgb$Popular)
-roc_xgb
-auc(roc_xgb)
-
-pred_rf <- predict(fit_rf, newdata = val, type = "prob")
-roc_rf <- roc(as.factor(val$Popular), pred_rf$Popular)
-roc_rf
-auc(roc_rf)
-
-hope <- data.frame(Popular = (pred_xgb$Popular + pred_rf$Popular) / 2,
-                   stringsAsFactors = F) %>%
-        mutate(Unpopular = 1 - Popular)
-roc(as.factor(val$Popular), hope$Popular)
+val <- cbind(valNews, buffer) %>% select(- Headline, - Snippet)
 ```
 
+On the validation set, the model XGB, the model RF and the ensemble solution will be run.
 
+```{r Running XGB, RF and the ensemble solution on the validation set, echo = TRUE}
+# On the validation set, predicting with XGB, calculating ROC curve and AUC.
+pred_xgb <- predict(fit_xgb, newdata = val, type = "prob")
+roc_xgb <- roc(as.factor(val$Popular), pred_xgb$Popular)
+auc_xgb <- round((auc(roc_xgb) * 100), 2)
 
-## REFERENCES
+# On the validation set, predicting with RF, calculating ROC curve and AUC.
+pred_rf <- predict(fit_rf, newdata = val, type = "prob")
+roc_rf <- roc(as.factor(val$Popular), pred_rf$Popular)
+auc_rf <- round((auc(roc_rf) * 100), 2)
 
-### ROC curves and AUC
+# On the validation set, predicting with the ensemble solution, calculating ROC curve and AUC.
+hope <- data.frame(Popular = (pred_xgb$Popular + pred_rf$Popular) / 2) 
+roc_ens <- roc(as.factor(val$Popular), hope$Popular)
+auc_ens <- round((auc(roc_ens) * 100), 2)
+```
+
+The following table shows the AUC for XGB, for RF and for the ensemble solution. 
+
+<br>
+
+```{r Final presentation table}
+final <- c(auc_rf, auc_xgb, auc_ens) %>%
+  as.data.frame() %>%
+  `colnames<-`("AUC on the VALIDATION SET") %>%
+  `rownames<-`(c("Random Forest Model",
+                 "eXtreme Gradient Boosting Model",
+                 "Ensemble Solution XGB + RF"))
+
+knitr::kable(final, "html", align = "c") %>% 
+  kable_styling(bootstrap_options = "bordered", 
+                full_width = F, font_size = 16) %>%
+  row_spec(1, bold = T, color = "#c90016", background = "white") %>%
+  row_spec(2, bold = T, color = "#205030", background = "white") %>%
+  row_spec(3, bold = T, color = "#08457E", background = "white")
+```
+
+<br> 
+
+Predictions on the validation set are close to predictions on bootstrapped resamples with optimal parameterization: ranking is the same, AUC levels are similar for XGB and the ensemble solution and one percentage point higher for Random Forest.  
+
+In predictions on the validation set, the individual models XGB and Random Forest deliver a 93 % AUC level of the ROC curve; the ensemble solution combining XGB and Random forest produces a 94 % AUC level. 
+
+<br>
+
+## X. REFERENCES
+
+### A. News Popularity Prediction
+
+https://www.researchgate.net/publication/306061597_Predicting_the_Popularity_of_News_Articles
+
+file:///C:/Users/Acer/Downloads/PAA_ModellingAndPredictingNewsPopularity_13112012.pdf
+
+file:///C:/Users/Acer/Downloads/4646-21907-1-PB.pdf
+
+https://minimaxir.com/2017/06/reddit-deep-learning/
+
+https://medium.com/@syedsadiqalinaqvi/predicting-popularity-of-online-news-articles-a-data-scientists-report-fac298466e7
+
+<br> 
+
+### B. ROC Curves and AUC
+
+<br> 
 
 https://topepo.github.io/caret/model-training-and-tuning.html#alternate-performance-metrics
 
@@ -1304,9 +1315,13 @@ https://www.rdocumentation.org/packages/pROC/versions/1.16.2/topics/roc
 
 https://www.rdocumentation.org/packages/pROC/versions/1.16.2/topics/plot.roc
 
+<br> 
 
+### C. Resampling and Distributions
 
-### Resampling and distributions
+<br> 
+
+https://rafalab.github.io/dsbook/machine-learning-in-practice.html#exercises-55
 
 https://www.rdocumentation.org/packages/caret/versions/6.0-86/topics/trainControl
 
