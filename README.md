@@ -21,7 +21,7 @@ A rate of **94 % AUC** has been reached using **Natural Language Processing** an
 
 <br>
 
-## IIi. TAGS
+## III. TAGS
 
 <br>
 
