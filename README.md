@@ -1,4 +1,4 @@
-# NLP-News-Success
+# NLP-Blog-Popularity-Prediction
 
 In progress
 
