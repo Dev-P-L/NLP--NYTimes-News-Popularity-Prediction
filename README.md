@@ -11,6 +11,8 @@ This project is comprised of 4 files:
 - NLP_Popularity_Prediction_NYTimes.html gives methods, insights and results in HTML format,
 - NLP_Popularity_Prediction_NYTimes.oxps gives methods, insights and results in XPS format. 
 
+<br>
+
 ## I. EXECUTIVE SUMMARY
 
 <br>
