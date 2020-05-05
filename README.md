@@ -1,13 +1,11 @@
 # NLP-Blog-Popularity-Prediction
 
-In progress
-
 ## I. Files
 
 This project is comprised of 4 files:
 
-- ds.csv contains data,
-- NLP_Popularity_Prediction_NYTimes.Rmd contains code,
+- ds.csv contains the data,
+- NLP_Popularity_Prediction_NYTimes.Rmd contains all code,
 - NLP_Popularity_Prediction_NYTimes.html gives methods, insights and results in HTML format,
 - NLP_Popularity_Prediction_NYTimes.oxps gives methods, insights and results in XPS format. 
 
