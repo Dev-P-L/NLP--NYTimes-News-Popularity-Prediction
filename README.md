@@ -11,7 +11,7 @@ This project is comprised of 4 files:
 
 <br>
 
-## I. EXECUTIVE SUMMARY
+## II. EXECUTIVE SUMMARY
 
 <br>
 
@@ -19,4 +19,10 @@ This project is about predicting popularity of a set of blog articles. The objec
 
 A rate of **94 % AUC** has been reached using **Natural Language Processing** and an **ensemble Machine Learning solution** combining eXtreme Gradient Boosting and Random Forest. Combination has been tested with ROC curves and AUCs on bootstrapped resamples. 
 
-TAGS: AUC, ROC, NLP, corpus, document term matrix, bag of words, ML, binary classification, eXtreme Gradient Boosting, Random Forest, bootstrapping, resamples, distributions, True Positive Rate (sensitivity), False Positive Rate, ensemble solution
+<br>
+
+## IIi. TAGS
+
+<br>
+
+AUC, ROC, NLP, corpus, document term matrix, bag of words, ML, binary classification, eXtreme Gradient Boosting, Random Forest, bootstrapping, resamples, distributions, True Positive Rate (sensitivity), False Positive Rate, ensemble solution
