@@ -15,9 +15,9 @@ This project is comprised of 4 files:
 
 <br>
 
-This project is about predicting popularity of a set of blog articles. The objective is maximizing the ROC AUC, i.e. the Area Under the Curve of the Receiver Operating Characteristic (ROC) curve. 
+Predicting popularity of several thousand New York Times blog articles has provided *useful insights* into latent value from unstructured data and impact of timing, classification predictors and word count.
 
-A rate of **94 % AUC** has been reached using **Natural Language Processing** and an **ensemble Machine Learning solution** combining eXtreme Gradient Boosting and Random Forest. Combination has been tested with ROC curves and AUCs on bootstrapped resamples. 
+**Natural Language Processing** has been combined with **Machine Learning**. In ML, eXtreme Gradient Boosting has proved somewhat more performing than Random Forest. Working on bootstrapped resample distributions has defeated overfitting, revealing true distributions and opening the way to an ensemble solution reaching a **94 % AUC** level on a completely insulated validation set. 
 
 <br>
 
