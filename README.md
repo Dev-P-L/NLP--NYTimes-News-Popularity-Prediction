@@ -1,5 +1,7 @@
 # NLP-Blog-Popularity-Prediction
 
+In progress
+
 ## I. Files
 
 This project is comprised of 4 files:
