@@ -9,7 +9,7 @@ This project is comprised of 4 files:
 - ds.csv contains the data,
 - NLP_Blog-Popularity-Prediction.Rmd contains all code,
 - NLP_Blog-Popularity-Prediction.html gives methods, insights and results in HTML format,
-- NLP_Blog-Popularity-Prediction.oxps gives methods, insights and results in XPS format. 
+- NLP_Blog-Popularity-Prediction.oxps gives methods, insights and results in OXPS format. 
 
 <br>
 
