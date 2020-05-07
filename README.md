@@ -7,9 +7,9 @@ In progress
 This project is comprised of 4 files:
 
 - ds.csv contains the data,
-- NLP_Popularity_Prediction_NYTimes.Rmd contains all code,
-- NLP_Popularity_Prediction_NYTimes.html gives methods, insights and results in HTML format,
-- NLP_Popularity_Prediction_NYTimes.oxps gives methods, insights and results in XPS format. 
+- NLP_Blog-Popularity-Prediction.Rmd contains all code,
+- NLP_Blog-Popularity-Prediction.html gives methods, insights and results in HTML format,
+- NLP_Blog-Popularity-Prediction.oxps gives methods, insights and results in XPS format. 
 
 <br>
 
@@ -17,9 +17,11 @@ This project is comprised of 4 files:
 
 <br>
 
-Predicting popularity of several thousand New York Times blog articles has provided *useful insights* into latent value from unstructured data and impact of timing, classification predictors and word count.
+Predicting popularity of blog articles has reached a **94 % AUC** level on a completely insulated validation set.
 
-**Natural Language Processing** has been combined with **Machine Learning**. In ML, eXtreme Gradient Boosting has proved somewhat more performing than Random Forest. Working on bootstrapped resample distributions has defeated overfitting, revealing true distributions and opening the way to an ensemble solution reaching a **94 % AUC** level on a completely insulated validation set. 
+It has also provided **useful insights** about predictive impact from unstructured data, timing, classification and word count.
+
+**Natural Language Processing** has been combined with **Machine Learning**. In Machine Learning, eXtreme Gradient Boosting has proved somewhat more performing than Random Forest. Working on bootstrapped resample distributions has defeated overfitting, revealed true distributions and opened up the way to the ensemble solution that has reached a 94 % AUC level. 
 
 <br>
 
