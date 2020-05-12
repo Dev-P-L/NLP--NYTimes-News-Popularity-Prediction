@@ -1,10 +1,10 @@
 ## NLP-Blog-Popularity-Prediction
 
+
 ### I. FOREWORD about DATA: ACKNOWLEDGEMENT and LIMITATION of USE
 
 This research project is based on Data provided by The New York Times for a Kaggle competition. Any use of it must comply with requirements from https://developer.nytimes.com. 
 
-<br>
 
 ### II. Files
 
