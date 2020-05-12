@@ -23,7 +23,7 @@ This project is lodged with the GitHub repository https://github.com/Dev-P-L/NLP
 
 <br>
 
-## II. EXECUTIVE SUMMARY
+## III. EXECUTIVE SUMMARY
 
 <br>
 
@@ -35,7 +35,7 @@ It has also provided **useful insights** about predictive impact from unstructur
 
 <br>
 
-## III. TAGS
+## IV. TAGS
 
 <br>
 
