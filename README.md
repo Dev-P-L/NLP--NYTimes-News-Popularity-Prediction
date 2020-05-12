@@ -1,8 +1,8 @@
-# NLP-Blog-Popularity-Prediction
+## NLP-Blog-Popularity-Prediction
 
 <br>
 
-## I. FOREWORD about DATA: ACKNOWLEDGEMENT and LIMITATION of USE
+### I. FOREWORD about DATA: ACKNOWLEDGEMENT and LIMITATION of USE
 
 <br>
 
@@ -10,7 +10,7 @@ This research project is based on Data provided by The New York Times for a Kagg
 
 <br>
 
-## II. Files
+### II. Files
 
 <br>
 
@@ -23,7 +23,7 @@ This project is lodged with the GitHub repository https://github.com/Dev-P-L/NLP
 
 <br>
 
-## III. EXECUTIVE SUMMARY
+### III. EXECUTIVE SUMMARY
 
 <br>
 
@@ -35,7 +35,7 @@ It has also provided **useful insights** about predictive impact from unstructur
 
 <br>
 
-## IV. TAGS
+### IV. TAGS
 
 <br>
 
