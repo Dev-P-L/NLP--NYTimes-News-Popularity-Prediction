@@ -1,18 +1,12 @@
 ## NLP-Blog-Popularity-Prediction
 
-<br>
-
 ### I. FOREWORD about DATA: ACKNOWLEDGEMENT and LIMITATION of USE
-
-<br>
 
 This research project is based on Data provided by The New York Times for a Kaggle competition. Any use of it must comply with requirements from https://developer.nytimes.com. 
 
 <br>
 
 ### II. Files
-
-<br>
 
 This project is lodged with the GitHub repository https://github.com/Dev-P-L/NLP-News-Popularity-Prediction and is comprised of four files:
 
@@ -25,8 +19,6 @@ This project is lodged with the GitHub repository https://github.com/Dev-P-L/NLP
 
 ### III. EXECUTIVE SUMMARY
 
-<br>
-
 In this project, a **94 % AUC** level has been reached in predicting news popularity on the validation set.
 
 It has also provided **useful insights** about predictive impact from unstructured data, timing, classification and word count.
@@ -37,6 +29,4 @@ It has also provided **useful insights** about predictive impact from unstructur
 
 ### IV. TAGS
 
-<br>
-
-TAGS: popularity prediction, timing, news types, word count, headlines, snippets, AUC, ROC, Natural Language Processing, corpus, Document Term Matrix, bag of words, Machine Learning, binary classification, Random Forest, eXtreme Gradient Boosting, True Positive Rate (sensitivity), False Positive Rate, overfitting, bootstrapping iterations, resamples, density functions, distributions, ensemble solution 
+Popularity prediction, timing, news types, word count, headlines, snippets, AUC, ROC, Natural Language Processing, corpus, Document Term Matrix, bag of words, Machine Learning, binary classification, Random Forest, eXtreme Gradient Boosting, True Positive Rate (sensitivity), False Positive Rate, overfitting, bootstrapping iterations, resamples, density functions, distributions, ensemble solution 
