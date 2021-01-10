@@ -27,10 +27,10 @@ This project is lodged with the GitHub repository https://github.com/Dev-P-L/NLP
 - NLP_News-Popularity-Prediction.html (methodology, insights, results)
 - and NLP_News-Popularity-Prediction.pdf (idem in other format).
 
-From my point of view, it is much easier to access results with the HTML file rather than the PDF file: 
+I recommend reading methodology, insights and results in the HTML version rather than the PDF version. The HTML version offers a dynamic table of contents, graphs and tables are not split over two pages and more color brings, in my perception, more readability.  The file NLP_News-Popularity-Prediction.html is comprised of the HTML source code. To access the rendered HTML pages, you only have to prepend https://htmlpreview.github.io/ to the original URL 
 
 <br>
-
+ 
 ### IV. ACKNOWLEDGEMENT and LIMITATION of USE
 
 This research project is based on Data provided by The New York Times for a Kaggle competition. Any use of it must comply with requirements from https://developer.nytimes.com. 
