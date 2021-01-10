@@ -18,7 +18,7 @@ Popularity prediction, timing, news types, word count, headlines, snippets, AUC,
 
 <br>
 
-### III. Files
+### III. FILES
 
 This project is lodged with the GitHub repository https://github.com/Dev-P-L/NLP-News-Popularity-Prediction and is comprised of four files:
 
