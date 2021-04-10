@@ -4,11 +4,11 @@
 
 ### I. EXECUTIVE SUMMARY
 
-In this project, a **94 % AUC** level has been reached in predicting news popularity on the validation set.
+In this project, a **94 % AUC** level has been reached in predicting blog articles popularity on the validation set.
 
 It has also provided **useful insights** about predictive impact from unstructured data, timing, classification and word count.
 
-**Natural Language Processing** has been combined with **Machine Learning**. In Machine Learning, *Random Forest* has proved somewhat more performing than *eXtreme Gradient Boosting*. Working on bootstrapped resample distributions has defeated overfitting, revealed true distributions and opened up the way to an ensemble solution that has slightly outperformed both individual models.   
+**Natural Language Processing** has been combined with **Machine Learning**. In Machine Learning, *eXtreme Gradient Boosting* has proved somewhat more performing than *Random Forest*. Working on bootstrapped resample distributions has defeated overfitting, revealed true distributions and opened up the way to an ensemble solution that has slightly outperformed both individual models.   
 
 <br>
 
