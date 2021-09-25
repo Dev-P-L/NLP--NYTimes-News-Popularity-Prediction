@@ -29,15 +29,16 @@ This project is lodged with the GitHub repository https://github.com/Dev-P-L/NLP
 
 I recommend reading methodology, insights and results in the HTML version rather than the PDF version. The HTML version offers a dynamic table of contents, external links and URLs are clickable, graphs and tables are not split over two pages and more color brings, in my perception, more readability.  
 
-Wishing to visualize Report.pdf? Very easy: just download it from GitHub.
+Wishing to visualize NLP_News-Popularity-Prediction.pdf? Very easy: just download it from GitHub.
 
-Wishing to visualize Report.html?
+Wishing to visualize NLP_News-Popularity-Prediction.Rmd?
 
   * You could open it in GitHub Desktop.
 
-  * Alternatively, you could use the URL https://rawcdn.githack.com/Dev-P-L/Bank-Marketing/17b63a112231f23fa7729ed62b9a5998b0a1adad/Report.html which, when activated, delivers Report.html to the browser with the correct Content-Type headers. The URL has been obtained by introducing the GitHub URL of Report.html into https://raw.githack.com/ as suggested in https://stackoverflow.com/questions/6551446/can-i-run-html-files-directly-from-github-instead-of-just-viewing-their-source .
+  * Alternatively, you could use the URL 
+https://rawcdn.githack.com/Dev-P-L/NLP--NYTimes-News-Popularity-Prediction/ad704a78ebf0c987108d88b2e6d1093db523b112/NLP_News_Popularity_Prediction.html which, when activated, delivers NLP_News-Popularity-Prediction.html to the browser with the correct Content-Type headers. The URL has been obtained by introducing the GitHub URL of NLP_News-Popularity-Prediction.html into https://raw.githack.com/ as suggested in https://stackoverflow.com/questions/6551446/can-i-run-html-files-directly-from-github-instead-of-just-viewing-their-source .
 
-    Alternatively again, you could knit Report.Rmd or ask me by email for a copy of Report.html.
+  * Alternatively again, you could knit NLP_News-Popularity-Prediction.Rmd or ask me by email for a copy of NLP_News-Popularity-Prediction.html.
 
 
 
