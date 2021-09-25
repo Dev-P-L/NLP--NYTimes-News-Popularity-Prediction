@@ -29,9 +29,17 @@ This project is lodged with the GitHub repository https://github.com/Dev-P-L/NLP
 
 I recommend reading methodology, insights and results in the HTML version rather than the PDF version. The HTML version offers a dynamic table of contents, external links and URLs are clickable, graphs and tables are not split over two pages and more color brings, in my perception, more readability.  
 
-But the file NLP_News-Popularity-Prediction.html is comprised of the HTML source code. To access the rendered HTML pages, you only have to prepend e.g. https://htmlpreview.github.io/ to the original URL of the HTML file https://github.com/Dev-P-L/NLP--NYTimes-News-Popularity-Prediction/blob/master/NLP_News_Popularity_Prediction.html and click on the combination. In other words, just click on https://htmlpreview.github.io/?https://github.com/Dev-P-L/NLP--NYTimes-News-Popularity-Prediction/blob/master/NLP_News_Popularity_Prediction.html . 
+Wishing to visualize Report.pdf? Very easy: just download it from GitHub.
 
-About prepending, see e.g. discussion at https://stackoverflow.com/questions/8446218/how-to-see-an-html-page-on-github-as-a-normal-rendered-html-page-to-see-preview .
+Wishing to visualize Report.html?
+
+  * You could open it in GitHub Desktop.
+
+  * Alternatively, you could use the URL https://rawcdn.githack.com/Dev-P-L/Bank-Marketing/17b63a112231f23fa7729ed62b9a5998b0a1adad/Report.html which, when activated, delivers Report.html to the browser with the correct Content-Type headers. The URL has been obtained by introducing the GitHub URL of Report.html into https://raw.githack.com/ as suggested in https://stackoverflow.com/questions/6551446/can-i-run-html-files-directly-from-github-instead-of-just-viewing-their-source .
+
+    Alternatively again, you could knit Report.Rmd or ask me by email for a copy of Report.html.
+
+
 
 <br>
  
