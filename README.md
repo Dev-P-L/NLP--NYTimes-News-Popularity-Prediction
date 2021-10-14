@@ -2,6 +2,27 @@
 
 <br>
 
+### III. FILES
+
+This project is lodged with the GitHub repository https://github.com/Dev-P-L/NLP-News-Popularity-Prediction and is comprised of four files:
+
+- README.md,
+- NLP_News-Popularity-Prediction.Rmd (all code),
+- NLP_News-Popularity-Prediction.html (methodology, insights, results)
+- and NLP_News-Popularity-Prediction.pdf (idem in other format).
+
+I recommend reading methodology, insights and results in the HTML version rather than the PDF version. The HTML version offers a dynamic table of contents, external links and URLs are clickable, graphs and tables are not split over two pages and more color brings, in my perception, more readability.  
+
+Wishing to visualize NLP_News-Popularity-Prediction.pdf? Very easy: just download it from GitHub.
+
+Wishing to visualize *NLP_News-Popularity-Prediction.html*?
+
+  * You could activate the hyperlink *Wishing to visualize *NLP_News-Popularity-Prediction.html*?
+  * Alternatively, you could open it in GitHub Desktop.
+  * Alternatively again, you could knit *NLP_News-Popularity-Prediction.Rmd* or ask me by email for a copy of *NLP_News-Popularity-Prediction.html* .
+
+<br>
+
 ### I. EXECUTIVE SUMMARY
 
 In this project, a **94 % AUC** level has been reached in predicting blog articles popularity on the validation set.
@@ -18,31 +39,7 @@ Popularity prediction, timing, news types, word count, headlines, snippets, AUC,
 
 <br>
 
-### III. FILES
 
-This project is lodged with the GitHub repository https://github.com/Dev-P-L/NLP-News-Popularity-Prediction and is comprised of four files:
-
-- README.md,
-- NLP_News-Popularity-Prediction.Rmd (all code),
-- NLP_News-Popularity-Prediction.html (methodology, insights, results)
-- and NLP_News-Popularity-Prediction.pdf (idem in other format).
-
-I recommend reading methodology, insights and results in the HTML version rather than the PDF version. The HTML version offers a dynamic table of contents, external links and URLs are clickable, graphs and tables are not split over two pages and more color brings, in my perception, more readability.  
-
-Wishing to visualize NLP_News-Popularity-Prediction.pdf? Very easy: just download it from GitHub.
-
-Wishing to visualize NLP_News-Popularity-Prediction.Rmd?
-
-  * You could open it in GitHub Desktop.
-
-  * Alternatively, you could use the URL 
-https://rawcdn.githack.com/Dev-P-L/NLP--NYTimes-News-Popularity-Prediction/ad704a78ebf0c987108d88b2e6d1093db523b112/NLP_News_Popularity_Prediction.html which, when activated, delivers NLP_News-Popularity-Prediction.html to the browser with the correct Content-Type headers. The URL has been obtained by introducing the GitHub URL of NLP_News-Popularity-Prediction.html into https://raw.githack.com/ as suggested in https://stackoverflow.com/questions/6551446/can-i-run-html-files-directly-from-github-instead-of-just-viewing-their-source .
-
-  * Alternatively again, you could knit NLP_News-Popularity-Prediction.Rmd or ask me by email for a copy of NLP_News-Popularity-Prediction.html.
-
-
-
-<br>
  
 ### IV. ACKNOWLEDGEMENT and LIMITATION of USE
 
