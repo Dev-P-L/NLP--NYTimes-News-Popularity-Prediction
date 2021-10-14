@@ -1,19 +1,25 @@
-## NLP-Blog-Popularity-Prediction
+## NLP--NYTimes-News-Popularity-Prediction
 
 <br>
 
-### III. FILES
+### I. ACKNOWLEDGEMENT and LIMITATION of USE
 
-This project is lodged with the GitHub repository https://github.com/Dev-P-L/NLP-News-Popularity-Prediction and is comprised of four files:
+This research project is based on Data provided by The New York Times for a Kaggle competition. Any use of it must comply with requirements from *https://developer.nytimes.com*. 
 
-- README.md,
-- NLP_News-Popularity-Prediction.Rmd (all code),
-- NLP_News-Popularity-Prediction.html (methodology, insights, results)
-- and NLP_News-Popularity-Prediction.pdf (idem in other format).
+<br>
+
+### II. FILES
+
+This project is lodged with the GitHub repository *https://github.com/Dev-P-L/NLP-News-Popularity-Prediction* and is comprised of four files:
+
+- *README.md*,
+- *NLP_News-Popularity-Prediction.Rmd* (all code),
+- *NLP_News-Popularity-Prediction.html* (methodology, insights, results)
+- and *NLP_News-Popularity-Prediction.pdf* (idem in other format).
 
 I recommend reading methodology, insights and results in the HTML version rather than the PDF version. The HTML version offers a dynamic table of contents, external links and URLs are clickable, graphs and tables are not split over two pages and more color brings, in my perception, more readability.  
 
-Wishing to visualize NLP_News-Popularity-Prediction.pdf? Very easy: just download it from GitHub.
+Wishing to visualize *NLP_News-Popularity-Prediction.pdf*? Very easy: just download it from GitHub.
 
 Wishing to visualize *NLP_News-Popularity-Prediction.html*?
 
@@ -23,7 +29,7 @@ Wishing to visualize *NLP_News-Popularity-Prediction.html*?
 
 <br>
 
-### I. EXECUTIVE SUMMARY
+### III. EXECUTIVE SUMMARY
 
 In this project, a **94 % AUC** level has been reached in predicting blog articles popularity on the validation set.
 
@@ -33,14 +39,6 @@ It has also provided **useful insights** about predictive impact from unstructur
 
 <br>
 
-### II. TAGS
+### IV. TAGS
 
 Popularity prediction, timing, news types, word count, headlines, snippets, AUC, ROC, Natural Language Processing, corpus, Document Term Matrix, bag of words, Machine Learning, binary classification, Random Forest, eXtreme Gradient Boosting, True Positive Rate (sensitivity), False Positive Rate, overfitting, bootstrapping iterations, resamples, density functions, distributions, ensemble solution 
-
-<br>
-
-
- 
-### IV. ACKNOWLEDGEMENT and LIMITATION of USE
-
-This research project is based on Data provided by The New York Times for a Kaggle competition. Any use of it must comply with requirements from https://developer.nytimes.com. 
