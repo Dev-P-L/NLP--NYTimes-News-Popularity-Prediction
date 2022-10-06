@@ -31,7 +31,7 @@ Wishing to visualize *NLP_News-Popularity-Prediction.pdf*? Very easy: just downl
 
 Wishing to visualize *NLP_News-Popularity-Prediction.html*?
 
-  * You could activate the hyperlink https://dev-p-l.github.io/NLP--NYTimes-News-Popularity-Prediction/NLP_News_Popularity_Prediction.html?
+  * You could activate the hyperlink https://dev-p-l.github.io/NLP--NYTimes-News-Popularity-Prediction/NLP_News_Popularity_Prediction.html ?
   * Alternatively, you could open it in GitHub Desktop.
   * Alternatively again, you could knit *NLP_News-Popularity-Prediction.Rmd* or ask me by email for a copy of *NLP_News-Popularity-Prediction.html* .
 
