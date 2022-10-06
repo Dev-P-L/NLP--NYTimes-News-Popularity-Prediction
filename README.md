@@ -1,10 +1,18 @@
-## NLP--NYTimes-News-Popularity-Prediction
+# Access to HTML Document
+
+https://dev-p-l.github.io/NLP--NYTimes-News-Popularity-Prediction/NLP_News_Popularity_Prediction.html
+
+<br>
+<br>
+
+# Presentation of Project with Source Code on
+# NLP--NYTimes-News-Popularity-Prediction
 
 <br>
 
 ### I. ACKNOWLEDGEMENT and LIMITATION of USE
 
-This research project is based on Data provided by The New York Times for a Kaggle competition. Any use of it must comply with requirements from *https://developer.nytimes.com*. 
+This research project is based on Data provided by The New York Times for a Kaggle competition. Any use of it must comply with requirements from https://developer.nytimes.com . 
 
 <br>
 
@@ -23,7 +31,7 @@ Wishing to visualize *NLP_News-Popularity-Prediction.pdf*? Very easy: just downl
 
 Wishing to visualize *NLP_News-Popularity-Prediction.html*?
 
-  * You could activate the hyperlink *https://dev-p-l.github.io/NLP--NYTimes-News-Popularity-Prediction/NLP_News_Popularity_Prediction.html*?
+  * You could activate the hyperlink https://dev-p-l.github.io/NLP--NYTimes-News-Popularity-Prediction/NLP_News_Popularity_Prediction.html?
   * Alternatively, you could open it in GitHub Desktop.
   * Alternatively again, you could knit *NLP_News-Popularity-Prediction.Rmd* or ask me by email for a copy of *NLP_News-Popularity-Prediction.html* .
 
