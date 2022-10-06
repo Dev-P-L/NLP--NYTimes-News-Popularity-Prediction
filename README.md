@@ -5,8 +5,8 @@ https://dev-p-l.github.io/NLP--NYTimes-News-Popularity-Prediction/NLP_News_Popul
 <br>
 <br>
 
-# Presentation of Project with Source Code on
-# NLP--NYTimes-News-Popularity-Prediction
+# Presentation of NLP Project on
+# Prediction of NYTimes Blog Articles Popularity 
 
 <br>
 
